@@ -2,23 +2,27 @@
 
 Public distribution channel for signed ScreenMate AI Windows releases.
 
-This repository must **not** contain private source code, API credentials, PATs, or signing private keys.
+## Security status
 
-## Release layout
+The repository is prepared, but **no production update is published yet**.
 
-- `stable/latest.json`: signed update manifest.
-- `stable/ScreenMateAI-Setup-x.y.z.exe`: installer asset attached to a GitHub Release.
-- GitHub Releases are the download origin.
+Do not add installers manually until the application updater is integrated, the Ed25519 public key is pinned in the client, and the release signing secret is configured.
 
-## Client verification
+## Planned release layout
 
-The client must:
-1. Fetch the manifest over HTTPS.
-2. Verify the Ed25519 signature against the public key embedded in the application.
-3. Validate the version and HTTPS asset URL allowlisted to this repository.
-4. Download to a temporary directory.
-5. Verify exact SHA-256 and byte length.
-6. Launch the installer only after all checks pass.
-7. Never run arbitrary scripts or accept an unsigned manifest.
+- `stable/latest.json`: Ed25519-signed canonical manifest.
+- GitHub Release asset: Windows installer.
+- Manifest contains product, channel, SemVer version, publication time, asset URL, size, SHA-256, minimum supported version, and release notes.
 
-No release is published until the signing private key and Windows code-signing strategy are provisioned.
+## Client must verify
+
+1. HTTPS origin is exactly this repository's GitHub Releases / raw manifest endpoint.
+2. Ed25519 signature using the public key embedded in the app.
+3. Product and channel match the installed app.
+4. Version is strictly newer (unless user explicitly chooses repair/reinstall).
+5. Asset host/path is allowlisted to this repository.
+6. Download size and SHA-256 match the signed manifest.
+7. Only after verification, launch installer with user consent.
+8. Keep rollback option until updated app completes first launch.
+
+A hash without a signature is not sufficient. A public manifest is untrusted until signature verification succeeds.
