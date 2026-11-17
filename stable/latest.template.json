@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "product": "ScreenMate AI",
+  "channel": "stable",
+  "version": "0.0.0",
+  "minimum_supported_version": "0.0.0",
+  "published_at": "1970-01-01T00:00:00Z",
+  "installer": {
+    "file_name": "ScreenMateAI-Setup-0.0.0.exe",
+    "url": "https://github.com/vinayvinjamuri/screenmate-ai-updates/releases/download/v0.0.0/ScreenMateAI-Setup-0.0.0.exe",
+    "size_bytes": 0,
+    "sha256": "REPLACE_WITH_64_HEX_SHA256"
+  },
+  "notes": "Template only; not a valid signed production release."
+}
